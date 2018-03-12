@@ -1,4 +1,5 @@
-﻿using Modelos;
+﻿using Controller;
+using Modelos;
 using System;
 
 namespace ConsoleView
@@ -14,16 +15,19 @@ namespace ConsoleView
             LimparTela = 5,
             Sair = 6
         }
-        public static OpcoesMenuPrincipal Menu()
+        private static OpcoesMenuPrincipal Menu()
         {
             Console.WriteLine("Escolha sua opcao");
+            Console.WriteLine();
             Console.WriteLine("- Clientes -");
             Console.WriteLine("1 - Cadastrar Novo");
             Console.WriteLine("2 - Pesquisar");
             Console.WriteLine("3 - Editar");
+            Console.WriteLine("4 - Excluir");
             Console.WriteLine("- Geral -");
-            Console.WriteLine("4 - Limpar Tela");
-            Console.WriteLine("5 - Sair");
+            Console.WriteLine("5 - Limpar Tela");
+            Console.WriteLine("6 - Sair");
+            Console.WriteLine();
 
             string opcao = Console.ReadLine();
             return (OpcoesMenuPrincipal) int.Parse(opcao);
@@ -44,18 +48,41 @@ namespace ConsoleView
 
             Console.WriteLine();
 
+            //Instanciando endereço
+            Endereco end = new Endereco();
+
             Console.WriteLine("Rua: ");
-            cli._Endereco.Rua = Console.ReadLine();
+            end.Rua = Console.ReadLine();
 
             Console.WriteLine();
 
             Console.WriteLine("Numero: ");
-            //cli._Endereco.Numero = Console.R
+            end.Numero = int.Parse(Console.ReadLine());
+
+            Console.WriteLine();
 
             Console.WriteLine("Complemento: ");
-            cli._Endereco.Complemento = Console.ReadLine();
+            end.Complemento = Console.ReadLine();
+
+            cli._Endereco = end;
 
             return cli;
+        }
+
+        private static void ExibirDadosCliente(Cliente cliente)
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("- Dados Cliente -");
+            Console.WriteLine("ID: " + cliente.PessoaID);
+            Console.WriteLine("Nome: " + cliente.Nome);
+            Console.WriteLine("Cpf: " + cliente.Cpf);
+            Console.WriteLine("- Endereço - ");
+            Console.WriteLine("Rua: " + cliente._Endereco.Rua);
+            Console.WriteLine("Numero: " + cliente._Endereco.Numero);
+            Console.WriteLine("Complemento: " + cliente._Endereco.Complemento);
+            Console.WriteLine("--------------------");
+            Console.WriteLine();
         }
 
         private static Cliente PesquisarCliente()
@@ -67,7 +94,12 @@ namespace ConsoleView
         {
             return new Cliente();
         }
-        
+
+        private static Cliente ExcluirCliente()
+        {
+            return new Cliente();
+        }
+
 
         static void Main(string[] args)
         {
@@ -80,8 +112,11 @@ namespace ConsoleView
                 switch (opcaoDigitada)
                 {
                     case OpcoesMenuPrincipal.CadastrarCliente:
-                        CadastrarCliente();
-                        break;
+                        Cliente c = CadastrarCliente();
+                        ClienteController cc = new ClienteController();
+                        cc.SalvarCliente(c);
+                        ExibirDadosCliente(c);
+                        break;                   
                     case OpcoesMenuPrincipal.PesquisarCliente:
                         PesquisarCliente();
                         break;
@@ -89,10 +124,10 @@ namespace ConsoleView
                         EditarCliente();
                         break;
                     case OpcoesMenuPrincipal.ExcluirCliente:
-                        //ExcluirCliente();
+                        ExcluirCliente();
                         break;
                     case OpcoesMenuPrincipal.LimparTela:
-                        //LimparTela();
+                        Console.Clear();
                         break;
                     default:
                         break;
@@ -100,31 +135,6 @@ namespace ConsoleView
                 }
             } while (opcaoDigitada != OpcoesMenuPrincipal.Sair);
 
-              /*  switch (opcaoDigitada)
-                {
-                    case 1:
-                        CadastrarCliente();
-
-                        break;
-
-                    case 2:
-                        PesquisarCliente();
-                        break;
-
-                    case 3:
-                        EditarCliente();
-                        break;
-
-                    case 4:
-                        break;
-
-                    default:
-                        break;
-                }
-            } while (opcaoDigitada != 5);*/
-
-
-            
         }
     }
 }
