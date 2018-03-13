@@ -85,9 +85,19 @@ namespace ConsoleView
             Console.WriteLine();
         }
 
-        private static Cliente PesquisarCliente()
+        private static void PesquisarCliente()
         {
-            return new Cliente();
+            Console.WriteLine("Digite o nome do cliente: ");
+            string nomeCliente = Console.ReadLine();
+
+            ClienteController cc = new ClienteController();
+            Cliente cli = cc.PesquisarPorNome(nomeCliente);
+
+            if (cli != null)
+                ExibirDadosCliente(cli);
+            else
+                Console.WriteLine(" * Cliente não encontrado");
+
         }
 
         private static Cliente EditarCliente()
