@@ -100,6 +100,12 @@ namespace ConsoleView
 
         }
 
+        private static void ExcluirCliente()
+        {
+            Console.WriteLine("Digite o id do cliente que deseja excluir: ");
+            int id = int.Parse(Console.ReadLine());
+        }
+
         private static Cliente EditarCliente()
         {
             return new Cliente();

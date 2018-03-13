@@ -24,5 +24,9 @@ namespace Controller
             else
                 return null;
         }
+
+        public Cliente PesquisarPorID
+
+
     }
 }
